@@ -27,38 +27,33 @@ WebSockets?
 -----------
 ![websockets are magic](info/gifmachine-2.gif)
 
-Okay I want this, what do?
-----------
+## Setting up locally
+
 1. Get [RVM](http://rvm.io/rvm/install)
-2. Using RVM, install Ruby 2.1.2 `rvm install 2.1.2`
+2. Using RVM, install Ruby 2.6.5 `rvm install 2.6.5`
 3. Run `bundle install`
-4. Get Postgres 9.1 or newer `sudo apt-get install postgresql postgresql-contrib`
-5. [If using Ubuntu Server 14.04 you might need to install `libpq-dev` for bundler to work](http://stackoverflow.com/a/6040822/831768)
-6. `sudo -u postgres createuser -D -A -P gifmachine` and enter in a good password
-7. `sudo -u postgres createdb -O gifmachine gifmachine` 
-8. Change `config/database.yml` to reflect the username and password of your gifmachine database
-9. Set your RACK_ENV (e.g. `export RACK_ENV='development'`)
-10. `rake db:schema:load` to load the database schema into the database
-11. Change the API password (:gifmachine_password) in app.rb to something else
-12. `rackup`
-13. Enjoy.
+4. Get Postgres 9.6 or newer
+5. Create a database locally called `gifmachine` (you can run: `bundle exec rake db:create`)
+6. Set your RACK_ENV (e.g. `export RACK_ENV='development'`)
+7. `bundle exec rake db:migrate` to load the database schema into the database
+8. Change the API password (:gifmachine_password) in app.rb to something else
+9. `rackup`
+10. Browse to `http://localhost:9292`
 
 
-Uh, how do I post gifs?
------------------------
-Here's a relevant snippet of Ruby code that might help you interface with gifmachine's API:
+## Posting Gifs
 
-```ruby
-EventMachine::HttpRequest.new("#{@config.base_url}/gif", options).post :body => {
-  :url => gif_url,
-  :who => username,
-  :meme_top => meme_top,
-  :meme_bottom => meme_bottom,
-  :seekrit => @config.password # Minimal security lololol
-}
-```
+Using `curl` you can post a gif and some text to register it in the `gifmachine`
 
-Alternatively, here's a simple curl:
 ```bash
-curl --data 'url=http://www.example.com/somegif.gif&who=thatAmazingPerson&meme_top=herp&meme_bottom=derp&seekrit=yourSuperSecretPasswordFromAppRb' 'http://yourGifMachineUrl/gif'
+curl --data 'url=http://www.example.com/somegif.gif&who=thatAmazingPerson&meme_top=herp&meme_bottom=derp&secret=yourSuperSecretPasswordFromAppRb' 'http://yourGifMachineUrl/gif'
 ```
+
+## Configuring for Production
+
+To run in production, you will need the following:
+
+- Pass the environment variable `RACK_ENV=production`
+- You will want to setup a Postgres database, and then run `bundle exec rake db:create && bundle exec rake db:migrate` against it before running the app.
+- You will pass in an environment variable `DATABASE_URL` of the format `postgres://username:password@database-url:5432/database-name`
+- Lastly, you will also want to set a password for the API, via the environment variable `GIFMACHINE_PASSWORD`.

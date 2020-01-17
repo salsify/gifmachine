@@ -4,14 +4,13 @@ require 'sinatra/activerecord'
 require 'json'
 require 'will_paginate'
 require 'will_paginate/active_record'
-require './config/environments'
 require './models/gif'
 
 set :server, 'thin'
 set :sockets, []
 
 configure do
-  set :gifmachine_password, 'If you don\'t change this I\'m going to be mad at you'
+  set :gifmachine_password, ENV.fetch('GIFMACHINE_PASSWORD', 'password123')
   set :gifmachine_fallback_gif, 'http://media.tumblr.com/acf1f8fbbe9a937d5fd6ad4802648302/tumblr_inline_na61n7e6yw1raprkq.gif'
 end
 
@@ -60,7 +59,7 @@ end
 
 # Save this to the db and update the websockets
 post '/gif' do
-  if params[:seekrit] == settings.gifmachine_password
+  if params[:secret] == settings.gifmachine_password
     gif = Gif.new
     gif.url = params[:url]
     gif.who = params[:who]
@@ -83,7 +82,7 @@ end
 
 # Authenticated route to reload all connected clients' web browsers for code changes
 post '/reload' do
-  if params[:seekrit] == settings.gifmachine_password
+  if params[:secret] == settings.gifmachine_password
     EM.next_tick { settings.sockets.each { |s| s.send({ :type => 'reload' }.to_json) } }
   else
     403
