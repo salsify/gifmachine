@@ -8,6 +8,7 @@ require './models/gif'
 
 set :server, 'thin'
 set :sockets, []
+set :logger, Logger.new(STDOUT)
 
 configure do
   set :gifmachine_password, ENV.fetch('GIFMACHINE_PASSWORD', 'password123')
