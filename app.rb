@@ -59,7 +59,7 @@ end
 
 # Save this to the db and update the websockets
 post '/gif' do
-  if params[:seekrit] == settings.gifmachine_password
+  if params[:secret] == settings.gifmachine_password
     gif = Gif.new
     gif.url = params[:url]
     gif.who = params[:who]
@@ -82,7 +82,7 @@ end
 
 # Authenticated route to reload all connected clients' web browsers for code changes
 post '/reload' do
-  if params[:seekrit] == settings.gifmachine_password
+  if params[:secret] == settings.gifmachine_password
     EM.next_tick { settings.sockets.each { |s| s.send({ :type => 'reload' }.to_json) } }
   else
     403
