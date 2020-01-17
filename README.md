@@ -37,7 +37,7 @@ WebSockets?
 6. Set your RACK_ENV (e.g. `export RACK_ENV='development'`)
 7. `bundle exec rake db:migrate` to load the database schema into the database
 8. Change the API password (:gifmachine_password) in app.rb to something else
-9. `rackup`
+9. `ruby app.rb`
 10. Browse to `http://localhost:9292`
 
 
