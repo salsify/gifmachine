@@ -51,6 +51,8 @@ curl --data 'url=http://www.example.com/somegif.gif&who=thatAmazingPerson&meme_t
 
 ## Configuring for Production
 
-In order to run the `gifmachine` connected to an external database, you will pass in an environment variable `DATABASE_URL` of the format `postgres://username:password@database-url:5432/database-name`
+You will need to provide `gifmachine` with a database. Once you have a database, you will want to run `rake db:migrate` against it before running the app.
+
+You will pass in an environment variable `DATABASE_URL` of the format `postgres://username:password@database-url:5432/database-name`
 
 You will also want to set a password for the API, via the environment variable `GIFMACHINE_PASSWORD`.
