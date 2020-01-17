@@ -36,10 +36,9 @@ WebSockets?
 5. Create a database locally called `gifmachine` (you can run: `bundle exec rake db:create`)
 6. Set your RACK_ENV (e.g. `export RACK_ENV='development'`)
 7. `bundle exec rake db:migrate` to load the database schema into the database
-8. Change the API password (:gifmachine_password) in app.rb to something else
-9. `ruby app.rb`
-10. Browse to `http://localhost:9292`
-
+8. Set an API password with `export GIFMACHINE_PASSWORD=foo`
+9. Run `ruby app.rb` to start the server
+10. Browse to `http://localhost:4567`
 
 ## Posting Gifs
 
