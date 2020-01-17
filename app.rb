@@ -4,14 +4,13 @@ require 'sinatra/activerecord'
 require 'json'
 require 'will_paginate'
 require 'will_paginate/active_record'
-require './config/environments'
 require './models/gif'
 
 set :server, 'thin'
 set :sockets, []
 
 configure do
-  set :gifmachine_password, 'If you don\'t change this I\'m going to be mad at you'
+  set :gifmachine_password, ENV.fetch('GIFMACHINE_PASSWORD', 'password123')
   set :gifmachine_fallback_gif, 'http://media.tumblr.com/acf1f8fbbe9a937d5fd6ad4802648302/tumblr_inline_na61n7e6yw1raprkq.gif'
 end
 
