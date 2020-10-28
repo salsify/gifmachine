@@ -1,0 +1,34 @@
+version: '2.4'
+services:
+  gifmachine:
+    build: .
+    image: local/gifmachine:dev
+    ports:
+      - 4567:4567
+    environment:
+      - GIFMACHINE_PASSWORD=foo
+      - DATABASE_URL=postgres://gifmachine:developer1@db:5432/gifmachine
+    depends_on:
+      - db-init
+  db:
+    image: postgres:9.6
+    ports:
+        - 5432:5432
+    environment:
+      - POSTGRES_PASSWORD=developer1
+      - POSTGRES_USER=gifmachine
+
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U gifmachine"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  db-init:
+    build: .
+    image: local/gifmachine:dev
+    command: ["bundle", "exec", "rake", "db:migrate"]
+    environment:
+      - RACK_ENV=container
+    depends_on: 
+      db:
+        condition: service_healthy
