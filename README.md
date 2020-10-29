@@ -40,6 +40,14 @@ WebSockets?
 9. Run `ruby app.rb` to start the server
 10. Browse to `http://localhost:4567`
 
+## Using containerized version locally
+
+1. Get [Docker Desktop](https://docs.docker.com/desktop/)
+2. Start env `docker-compose up`
+3. Stop env `docker-compose down` or `^C` 
+
+*Note:* Hot reload was not implemented so for any change in the code it is necessary to rebuild the image with `docker-compose up --build`
+
 ## Posting Gifs
 
 Using `curl` you can post a gif and some text to register it in the `gifmachine`

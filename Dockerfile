@@ -15,3 +15,7 @@ COPY Gemfile Gemfile.lock /app/
 RUN bundle install
 
 COPY . /app/
+
+## TODO
+# * Find a way to add user nobody and allow to use the bundle binary
+# * Understand why the app needs the rackup to start insided of the container
