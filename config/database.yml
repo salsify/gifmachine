@@ -13,6 +13,6 @@ container:
 production:
   adapter: postgresql
   database: gifmachine
-  host: db-gifmachine
+  host: <%= ENV['DB_HOSTNAME'] %>
   user: <%= ENV['POSTGRES_USER'] %>
   password: <%= ENV['POSTGRES_PASSWORD'] %>
