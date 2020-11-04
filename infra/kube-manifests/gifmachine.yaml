@@ -86,14 +86,14 @@ spec:
           ports:
             - name: main
               containerPort: 4567
-          # livenessProbe:
-          #   httpGet:
-          #     path: /gif
-          #     port: 4567
-          # readinessProbe:
-          #   httpGet:
-          #     path: /gif
-          #     port: 4567
+          livenessProbe:
+            httpGet:
+              path: /gif
+              port: 4567
+          readinessProbe:
+            httpGet:
+              path: /gif
+              port: 4567
 ---
 apiVersion: v1
 kind: Service

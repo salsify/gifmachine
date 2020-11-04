@@ -93,6 +93,8 @@ const gifMachine = new k8s.yaml.ConfigFile(
   },
 );
 
-export const ldOfrontendIpbj = gifMachine.getResource('v1/Service', 'moser-cloud', 'gifMachine');
+const loadBalancer = gifMachine.getResource('v1/Service', 'moser-cloud', 'gifmachine');
+// Export gifMachine Address to be used to access the service
+export const gifMachineAddress = pulumi.interpolate`${loadBalancer.status.loadBalancer.ingress[0].hostname}:${loadBalancer.spec.ports[0].port}`;
 // Export the cluster's kubeconfig.
 export const kubeconfig = cluster.kubeconfig;
