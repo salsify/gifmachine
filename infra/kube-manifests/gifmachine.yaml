@@ -13,15 +13,27 @@ spec:
     spec:
       initContainers:
         - name: setup-db
-          image: local/gifmachine
-          imagePullPolicy: Never
+          image: ghcr.io/moser-ss/gifmachine
+          imagePullPolicy: Always
           env:
             - name: POSTGRES_PASSWORD
-              value: developer1
+              valueFrom:
+                configMapKeyRef:
+                  name: db-gifmachine-secret
+                  key: db-password
             - name: POSTGRES_USER
-              value: gifmachine
+              valueFrom:
+                configMapKeyRef:
+                  name: db-gifmachine-config
+                  key: db-user
+            - name: DB_HOSTNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: db-gifmachine-config
+                  key: db-hostname
             - name: RACK_ENV
               value: production
+
           command:
             - bundle
           args:
@@ -36,8 +48,23 @@ spec:
           env:
             - name: GIFMACHINE_PASSWORD
               value: foo
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: db-gifmachine-secret
+                  key: db-password
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: db-gifmachine-config
+                  key: db-user
+            - name: DB_HOSTNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: db-gifmachine-config
+                  key: db-hostname
             - name: DATABASE_URL
-              value: postgres://gifmachine:developer1@db-gifmachine:5432/gifmachine
+              value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(DB_HOSTNAME):5432/gifmachine
           resources:
             limits:
               memory: "128Mi"
