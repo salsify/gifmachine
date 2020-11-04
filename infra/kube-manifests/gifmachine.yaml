@@ -53,7 +53,10 @@ spec:
           imagePullPolicy: Always
           env:
             - name: GIFMACHINE_PASSWORD
-              value: foo
+              valueFrom:
+                secretKeyRef:
+                  name: gifmachine-secret
+                  key: password
             - name: POSTGRES_PASSWORD
               valueFrom:
                 secretKeyRef:

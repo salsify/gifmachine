@@ -25,10 +25,14 @@ const cluster = new eks.Cluster(`${projectName}-cluster`, {
   enabledClusterLogTypes: ['api', 'audit', 'authenticator'],
 });
 
-const dbPassword = new random.RandomPassword('password', {
+const dbPassword = new random.RandomPassword('db-gifmachine-password', {
   length: 16,
   special: false,
 });
+export const gifMachinePassword = new random.RandomPassword('gifmachine-password', {
+  length: 16,
+  special: false,
+}).result;
 
 const subnetGroup = new aws.rds.SubnetGroup('dbsubnets', {
   subnetIds: vpc.privateSubnetIds,
@@ -64,6 +68,20 @@ new k8s.core.v1.Secret(
     },
     stringData: {
       'db-password': dbPassword.result,
+    },
+  },
+  { provider: cluster.provider },
+);
+
+new k8s.core.v1.Secret(
+  'gifmachine-secret',
+  {
+    metadata: {
+      name: 'gifmachine-secret',
+      namespace: clusterAppNamespace.metadata.name,
+    },
+    stringData: {
+      password: gifMachinePassword,
     },
   },
   { provider: cluster.provider },
