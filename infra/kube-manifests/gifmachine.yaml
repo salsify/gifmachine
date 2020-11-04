@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gifmachine
+  namespace: moser-cloud
 spec:
   selector:
     matchLabels:
@@ -18,7 +19,7 @@ spec:
           env:
             - name: POSTGRES_PASSWORD
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: db-gifmachine-secret
                   key: db-password
             - name: POSTGRES_USER
@@ -31,6 +32,11 @@ spec:
                 configMapKeyRef:
                   name: db-gifmachine-config
                   key: db-hostname
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: db-gifmachine-config
+                  key: db-name
             - name: RACK_ENV
               value: production
 
@@ -50,7 +56,7 @@ spec:
               value: foo
             - name: POSTGRES_PASSWORD
               valueFrom:
-                configMapKeyRef:
+                secretKeyRef:
                   name: db-gifmachine-secret
                   key: db-password
             - name: POSTGRES_USER
@@ -63,28 +69,37 @@ spec:
                 configMapKeyRef:
                   name: db-gifmachine-config
                   key: db-hostname
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: db-gifmachine-config
+                  key: db-name          
             - name: DATABASE_URL
-              value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(DB_HOSTNAME):5432/gifmachine
+              value: postgres://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@$(DB_HOSTNAME):5432/$(DB_NAME)
           resources:
             limits:
-              memory: "128Mi"
-              cpu: "500m"
+              memory: 128Mi
+              cpu: 500m
+            requests:
+              cpu: 100m
+              memory: 64Mi
           ports:
             - name: main
               containerPort: 4567
-          livenessProbe:
-            httpGet:
-              path: /gif
-              port: 4567
-          readinessProbe:
-            httpGet:
-              path: /gif
-              port: 4567
+          # livenessProbe:
+          #   httpGet:
+          #     path: /gif
+          #     port: 4567
+          # readinessProbe:
+          #   httpGet:
+          #     path: /gif
+          #     port: 4567
 ---
 apiVersion: v1
 kind: Service
 metadata:
   name: gifmachine
+  namespace: moser-cloud
 spec:
   selector:
     app: gifmachine

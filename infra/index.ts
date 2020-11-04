@@ -3,6 +3,7 @@ import * as eks from '@pulumi/eks';
 import * as k8s from '@pulumi/kubernetes';
 import * as aws from '@pulumi/aws';
 import * as random from '@pulumi/random';
+import * as pulumi from '@pulumi/pulumi';
 
 const projectName = 'moser-cloud';
 const dbName = 'dbGifmachine';
@@ -23,14 +24,12 @@ const cluster = new eks.Cluster(`${projectName}-cluster`, {
   maxSize: 3,
   enabledClusterLogTypes: ['api', 'audit', 'authenticator'],
 });
-// Export the cluster's kubeconfig.
-export const kubeconfig = cluster.kubeconfig;
 
 const dbPassword = new random.RandomPassword('password', {
   length: 16,
-  special: true,
-  overrideSpecial: `_%@`,
+  special: false,
 });
+
 const subnetGroup = new aws.rds.SubnetGroup('dbsubnets', {
   subnetIds: vpc.privateSubnetIds,
 });
@@ -47,8 +46,6 @@ const dbGifmachine = new aws.rds.Instance('db-gifmachine', {
   password: dbPassword.result,
   skipFinalSnapshot: true,
 });
-
-export const dbHostname = dbGifmachine.address;
 
 const clusterAppNamespace = new k8s.core.v1.Namespace(
   projectName,
@@ -71,26 +68,31 @@ new k8s.core.v1.Secret(
   },
   { provider: cluster.provider },
 );
-new k8s.core.v1.ConfigMap('db-gifmachine-config', {
-  metadata: {
-    name: 'db-gifmachine-config',
-    namespace: clusterAppNamespace.metadata.name,
+new k8s.core.v1.ConfigMap(
+  'db-gifmachine-config',
+  {
+    metadata: {
+      name: 'db-gifmachine-config',
+      namespace: clusterAppNamespace.metadata.name,
+    },
+    data: {
+      'db-hostname': dbGifmachine.address,
+      'db-user': dbGifmachine.username,
+      'db-name': dbName,
+    },
   },
-  data: {
-    'db-hostname': dbHostname,
-    'db-user': dbGifmachine.username,
+  { provider: cluster.provider },
+);
+const gifMachine = new k8s.yaml.ConfigFile(
+  'gifMachine',
+  {
+    file: './kube-manifests/gifmachine.yaml',
   },
-});
-// const gifMachine = new k8s.yaml.ConfigFile(
-//   'gifMachine',
-//   {
-//     file: './kube-manifests/gifmachine.yaml',
-//   },
-//   {
-//     provider: cluster.provider,
-//   },
-// );
+  {
+    provider: cluster.provider,
+  },
+);
 
-// const loadBalancer = gifMachine.getResource('v1/Service', 'gifmachine');
-
-// export const publicIP = loadBalancer.status.loadBalancer.ingress[0].ip;
+export const ldOfrontendIpbj = gifMachine.getResource('v1/Service', 'moser-cloud', 'gifMachine');
+// Export the cluster's kubeconfig.
+export const kubeconfig = cluster.kubeconfig;
