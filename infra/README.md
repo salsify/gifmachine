@@ -19,6 +19,7 @@ Accept the changes and wait. Normally it takes 15 mins to have all the resources
 
 ## Access Gifmachine
 To access the gif machine execute the command `pulumi stack config gifMachineAddress` to show the Gif Machine address 
+
 To get the password of gifmachine run `pulumi stack config gifMachinePassword`
 
 ## Access the EKS cluster 
@@ -29,3 +30,15 @@ export KUBECONFIG=eks-config
 # To find the gifmachine deployment 
 kubectl get deploy gifmachine -n moser-cloud 
 ```
+
+
+## Arch
+
+The resources in this arch are the following:
+- Dedicated VPC
+- Amazon RDS
+- EKS Cluster
+
+The EKS Cluster contains 1 Deployment resource to manage the gifmachine and 1 ConfigMap and 2 Secrets to provide the necessary configuration to the gifmachine
+
+Diagram of the solution made in [LucidChart](https://lucid.app/documents/view/d8b7ec78-15f1-4f00-a63e-8f93ec13f5de)
