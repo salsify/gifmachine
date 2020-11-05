@@ -1,0 +1,25 @@
+{
+    "name": "gifmachine",
+    "devDependencies": {
+        "@types/node": "^10.0.0",
+        "@typescript-eslint/eslint-plugin": "^4.6.0",
+        "@typescript-eslint/parser": "^4.6.0",
+        "eslint": "^7.12.1",
+        "eslint-config-airbnb-base": "^14.2.0",
+        "eslint-config-prettier": "^6.15.0",
+        "eslint-plugin-import": "^2.22.1",
+        "eslint-plugin-prettier": "^3.1.4",
+        "prettier": "^2.1.2"
+    },
+    "dependencies": {
+        "@pulumi/aws": "^3.0.0",
+        "@pulumi/awsx": "^0.22.0",
+        "@pulumi/eks": "^0.20.0",
+        "@pulumi/kubernetes": "^2.6.3",
+        "@pulumi/pulumi": "^2.0.0",
+        "@pulumi/random": "^2.4.0"
+    },
+    "scripts": {
+        "lint": "eslint . --ext .ts"
+    }
+}
