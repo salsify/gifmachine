@@ -12,7 +12,7 @@
         "prettier": "^2.1.2"
     },
     "dependencies": {
-        "@pulumi/aws": "^3.0.0",
+        "@pulumi/aws": "^3.11.0",
         "@pulumi/awsx": "^0.22.0",
         "@pulumi/eks": "^0.20.0",
         "@pulumi/kubernetes": "^2.6.3",
