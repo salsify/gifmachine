@@ -1,4 +1,4 @@
-ruby '2.6.5'
+ruby '3.1.1'
 source 'https://rubygems.org'
 gem 'sinatra'
 gem 'activerecord', '>= 6.0.3.5'

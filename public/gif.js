@@ -188,6 +188,7 @@ var check_connection = function () {
             break;
         case 2: // CLOSING
             console.log('Closing...');
+            socket.close()
             break;
         case 3: // CLOSED
             // attempt to reconnect on close.
