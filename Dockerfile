@@ -5,15 +5,13 @@ WORKDIR /app
 COPY Gemfile Gemfile.lock /app/
 RUN bundle install
 
-FROM ruby:3.1.1-alpine3.15
+FROM ruby:3.1.1
 LABEL org.opencontainers.image.source https://github.com/Moser-ss/gifmachine
 EXPOSE 4567
 WORKDIR /app
 CMD ["bundle", "exec", "rackup", "--host", "0.0.0.0", "-p", "4567"]
 
-# FIX https://security.snyk.io/vuln/SNYK-ALPINE315-GMP-2386788
-RUN apk add --no-cache libgmpxx=6.2.1-r1
-COPY --from=builder /app /app
+COPY --from=builder /usr/local/bundle /usr/local/bundle
 COPY . /app/
 
 ## TODO
