@@ -1,4 +1,4 @@
-ruby '3.1.1'
+ruby '3.1.3'
 source 'https://rubygems.org'
 gem 'sinatra'
 gem 'activerecord'
