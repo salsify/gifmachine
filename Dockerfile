@@ -1,4 +1,4 @@
-FROM ruby:3.1.3-alpine as builder
+FROM ruby:3.1.4-alpine as builder
 
 RUN apk add --no-cache build-base postgresql-dev
 # throw errors if Gemfile has been modified since Gemfile.lock
@@ -7,7 +7,7 @@ WORKDIR /app
 COPY Gemfile Gemfile.lock /app/
 RUN bundle install
 
-FROM ruby:3.1.3-alpine
+FROM ruby:3.1.4-alpine
 LABEL org.opencontainers.image.source https://github.com/Moser-ss/gifmachine
 EXPOSE 4567
 WORKDIR /app
