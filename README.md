@@ -29,16 +29,12 @@ WebSockets?
 
 ## Setting up locally
 
-1. Get [RVM](http://rvm.io/rvm/install)
-2. Using RVM, install Ruby 2.6.5 `rvm install 2.6.5`
-3. Run `bundle install`
-4. Get Postgres 9.6 or newer
-5. Create a database locally called `gifmachine` (you can run: `bundle exec rake db:create`)
-6. Set your RACK_ENV (e.g. `export RACK_ENV='development'`)
-7. `bundle exec rake db:migrate` to load the database schema into the database
-8. Set an API password with `export GIFMACHINE_PASSWORD=foo`
-9. Run `ruby app.rb` to start the server
-10. Browse to `http://localhost:4567`
+This project use [devcontainers](https://containers.dev/) to simplify the developemnt process. The devcontainers can be used with VSCode or directly with [GitHub UI](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/introduction-to-dev-containers)
+
+The devcontainer is configured to use Ruby 3.1 and Postgres 9.6. Also it will install the necessary Ruby dependecies and create the database
+After the devcontainer starts 
+1. Run `ruby app.rb` to start the server
+2. Browse to `http://localhost:4567`
 
 ## Using containerized version locally
 
