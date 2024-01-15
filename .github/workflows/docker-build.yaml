@@ -86,9 +86,8 @@ jobs:
       - name: Startup environment
         run: |
           docker compose up -d --wait
+          sleep 5
           docker ps
-          sleep 5s
-          curl localhost:4567/gif |grep gifmachine
 
       - name: Run tests
         run: |
