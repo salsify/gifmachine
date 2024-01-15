@@ -87,6 +87,7 @@ jobs:
         run: |
           docker compose up -d --wait
           docker ps
+          sleep 5s
           curl localhost:4567/gif |grep gifmachine
 
       - name: Run tests
