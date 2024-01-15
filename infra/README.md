@@ -3,18 +3,18 @@
 
 ## Requirements
 To provision the infrastructure structure it is necessary:
-+ [Pulumi](https://www.pulumi.com/docs/get-started/aws/)
++ [Pulumi](https://www.pulumi.com/docs/install/)
 + NodeJs 
 + Account in AWS and IAM user with enough privileges to create resources
-+ Account in Pulumi
   
 ## Deploy Infrastructure
 
-After setup your local environment execute the following command:
-```
-pulumi up
-```
-*Note:* It will ask to login if it is the first time to use the cli
+After setup your local environment execute the following commands:
+1. Initialize pulumi local stack `pulumi login file://.`
+2. Export AWS credentials `export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID>` `export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>`
+3. Preview dev stack `pulumi preview --stack dev`
+
+
 Accept the changes and wait. Normally it takes 15 mins to have all the resources up
 
 ## Access Gifmachine
