@@ -13,6 +13,9 @@ ENV RACK_ENV='development'
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
      && apt-get -y install --no-install-recommends postgresql-client
 
+# Install Pulumi
+RUN su vscode -c "curl -fsSL https://get.pulumi.com | sh"     
+
 # [Optional] Uncomment this line to install additional gems.
 # RUN su vscode -c "gem install <your-gem-names-here>"
 

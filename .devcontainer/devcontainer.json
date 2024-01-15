@@ -14,7 +14,7 @@
 	"forwardPorts": [4567, 5432],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "bundle install && bundle exec rake db:create && bundle exec rake db:migrate",
+	"postCreateCommand": ".devcontainer/initContainer.sh",
 
 	// Configure tool-specific properties.
 	 "customizations": {
