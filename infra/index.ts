@@ -14,12 +14,12 @@ const vpc = new awsx.ec2.Vpc(`${projectName}-vpc-cluster`, {
 
 // Create the EKS cluster itself and a deployment of the Kubernetes dashboard.
 const cluster = new eks.Cluster(`${projectName}-cluster`, {
-  vpcId: vpc.id,
+  vpcId: vpc.vpcId,
   subnetIds: vpc.publicSubnetIds,
   instanceType: 't2.micro',
   desiredCapacity: 2,
   deployDashboard: false,
-  version: '1.18',
+  version: '1.28',
   minSize: 2,
   maxSize: 3,
   enabledClusterLogTypes: ['api', 'audit', 'authenticator'],
@@ -40,7 +40,7 @@ const subnetGroup = new aws.rds.SubnetGroup('dbsubnets', {
 
 const dbGifmachine = new aws.rds.Instance('db-gifmachine', {
   engine: 'postgres',
-  engineVersion: '9.6',
+  engineVersion: '11',
   instanceClass: aws.rds.InstanceTypes.T2_Micro,
   allocatedStorage: 5,
   dbSubnetGroupName: subnetGroup.id,

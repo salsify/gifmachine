@@ -8,6 +8,8 @@ RUN su vscode -c "/usr/local/rvm/bin/rvm fix-permissions"
 # The value is a comma-separated list of allowed domains 
 ENV RAILS_DEVELOPMENT_HOSTS=".githubpreview.dev,.preview.app.github.dev,.app.github.dev"
 ENV RACK_ENV='development'
+ENV PULUMI_CONFIG_PASSPHRASE='PULUMI_DEVELOPMENT'
+ENV KUBECTL_VERSION=v1.25.10
 
 # [Optional] Uncomment this section to install additional OS packages.
 RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
@@ -15,6 +17,15 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 
 # Install Pulumi
 RUN su vscode -c "curl -fsSL https://get.pulumi.com | sh"     
+
+# Install AWS CLI
+RUN su vscode -c 'curl https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o /tmp/awscliv2.zip' \
+     && su vscode -c 'unzip /tmp/awscliv2.zip -d /tmp' \ 
+     && su vscode -c "sudo /tmp/aws/install"
+
+# Install Kubectl
+RUN wget -qO /usr/bin/kubectl https://dl.k8s.io/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl && chmod +x /usr/bin/kubectl
+
 
 # [Optional] Uncomment this line to install additional gems.
 # RUN su vscode -c "gem install <your-gem-names-here>"

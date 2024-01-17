@@ -29,7 +29,7 @@ WebSockets?
 
 ## Setting up locally
 
-This project use [devcontainers](https://containers.dev/) to simplify the developemnt process. The devcontainers can be used with VSCode or directly with [GitHub UI](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/introduction-to-dev-containers)
+This project use [devcontainers](https://containers.dev/) to simplify the development process. The devcontainers can be used with VSCode or directly with [GitHub UI](https://docs.github.com/en/codespaces/setting-up-your-project-for-codespaces/adding-a-dev-container-configuration/introduction-to-dev-containers)
 
 The devcontainer is configured to use Ruby 3.1 and Postgres 9.6. Also it will install the necessary Ruby dependecies and create the database
 After the devcontainer starts 

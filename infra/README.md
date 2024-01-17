@@ -11,21 +11,21 @@ To provision the infrastructure structure it is necessary:
 
 After setup your local environment execute the following commands:
 1. Initialize pulumi local stack `pulumi login file://.`
-2. Export AWS credentials `export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID>` `export AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>`
+2. Export AWS credentials `export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID> AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>`
 3. Preview dev stack `pulumi preview --stack dev`
 
 
 Accept the changes and wait. Normally it takes 15 mins to have all the resources up
 
 ## Access Gifmachine
-To access the gif machine execute the command `pulumi stack config gifMachineAddress` to show the Gif Machine address 
+To access the gif machine execute the command `pulumi stack --stack dev output gifMachineAddress` to show the Gif Machine address 
 
-To get the password of gifmachine run `pulumi stack config gifMachinePassword`
+To get the password of gifmachine run `pulumi stack --stack dev output gifMachinePassword`
 
 ## Access the EKS cluster 
 For this it is necessary to have `kubectl` in your machine or an GUI client , my favorite is [Lens](https://k8slens.dev/)
 ```shell
-pulumi stack config kubeconfig > eks-config
+pulumi stack --stack dev output kubeconfig > eks-config
 export KUBECONFIG=eks-config
 # To find the gifmachine deployment 
 kubectl get deploy gifmachine -n moser-cloud 

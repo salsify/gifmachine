@@ -9,4 +9,4 @@ cd infra
 source /usr/local/share/nvm/nvm.sh
 nvm install
 npm ci
-echo "Installation Completeted"
+echo "Installation Completed"

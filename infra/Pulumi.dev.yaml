@@ -1,3 +1,4 @@
+encryptionsalt: v1:0rQQJpOWgDQ=:v1:A/rk7Dv3d4csNC1H:I3kLAe3W66+nHyM5ttE5stXyfqjAcA==
 config:
   aws:region: eu-west-1
   pulumi:template: aws-typescript
