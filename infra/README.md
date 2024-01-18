@@ -3,9 +3,11 @@
 
 ## Requirements
 To provision the infrastructure structure it is necessary:
-+ [Pulumi](https://www.pulumi.com/docs/install/)
-+ NodeJs 
 + Account in AWS and IAM user with enough privileges to create resources
+If you are not using the devcontainer you will need the following dependencies
++ [Pulumi](https://www.pulumi.com/docs/install/) 
++ NodeJs using nvm
++ Install NodeJs dependencies using `npm ci`
   
 ## Deploy Infrastructure
 
@@ -13,6 +15,8 @@ After setup your local environment execute the following commands:
 1. Initialize pulumi local stack `pulumi login file://.`
 2. Export AWS credentials `export AWS_ACCESS_KEY_ID=<YOUR_ACCESS_KEY_ID> AWS_SECRET_ACCESS_KEY=<YOUR_SECRET_ACCESS_KEY>`
 3. Preview dev stack `pulumi preview --stack dev`
+   1. Accept the creation of stack
+4. Apply dev stack `pulumi up --stack dev`
 
 
 Accept the changes and wait. Normally it takes 15 mins to have all the resources up
@@ -31,6 +35,9 @@ export KUBECONFIG=eks-config
 kubectl get deploy gifmachine -n moser-cloud 
 ```
 
+## Destroy Infrastructure
+To destroy infrastructure
+1. `pulumi destroy stack --dev`
 
 ## Arch
 
